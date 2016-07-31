@@ -14,7 +14,7 @@
       "model": "Challenger",
       "year": "2007",
       "price": "9999",
-      "color": "Silver",
+      "color": "blue",
       "purchased": false,
       "description": "This is an immaculate 2007 Dodge Challenger with only 20000 miles on it. Leather seats, power everything."
     },
@@ -23,7 +23,7 @@
       "model": "Camry",
       "year": "2004",
       "price": "5999",
-      "color": "Grey",
+      "color": "pink",
       "purchased": false,
       "description": "This is an immaculate 2004 Toyota Camry with only 75000 miles on it. fur seats, power everything."
     }
