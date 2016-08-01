@@ -2,12 +2,12 @@ var CarLot = (function () {
   var inventory = [];
 
   return {
-    loadInventory: function (cb) {
+    loadInventory: function (callback) {
       var inventoryLoader = new XMLHttpRequest();
 
       inventoryLoader.addEventListener("load", function () {
-        inventory = JSON.parse(inventoryLoader.responseText)
-        cb(inventory);
+        inventory = JSON.parse(this.responseText);
+        callback(inventory);
       });
       inventoryLoader.open("GET", "inventory.json");
       inventoryLoader.send();
@@ -15,28 +15,30 @@ var CarLot = (function () {
   };
 
 })();
+function populatePage (inventory) {
 
-
-function didLoadData (inventory) {
-  var output = document.getElementById("outPutId");
-  var inventoryOut = [];
-
+  var output = document.getElementById("finalOut");
+  var inventoryString = "";
+// Looping though all array of cars
   for (var i = 0; i < inventory.cars.length; i++) {
-    car = inventory.cars[i];
+    cars = inventory.cars[i];
 
-    inventoryOut +=
-    `<article id="card--${i}" class="col-md-4 carInfo" style="border: 1px solid ${car.color}">
-      <h2>${car.year} ${car.make}</h2>
-      <h3>${car.model}</h3>
+    inventoryString +=
+    `<div id="card--${i}" class="col-md-4 card" style="border: 1px solid ${cars.color}">
+      <h2>${cars.year} ${cars.make}</h2>
+      <h3>${cars.model}</h3>
       <ul>
-        <li>Price: $${car.price}</li>
-        <li>Color: ${car.color}</li>
-        <li>Purchased: ${car.purchased}</li>
+        <li>Price: $${cars.price}</li>
+        <li>Color: ${cars.color}</li>
+        <li>Purchased: ${cars.purchased}</li>
       </ul>
-      <p id="carDescription--${i}" class="carDescription">${car.description}</p>
-    </article>`;
+      <p id="carDescription--${i}" class="Description">${cars.description}</p>
+    </div>`;
   }
-  output.innerHTML = inventoryOut;
+  output.innerHTML = inventoryString;
+
+  CarLot.activateEvents();
 
 }
-CarLot.loadInventory(didLoadData);
+
+CarLot.loadInventory(populatePage);
