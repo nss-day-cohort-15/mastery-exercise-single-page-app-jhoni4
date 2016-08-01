@@ -32,7 +32,7 @@ function populatePage (inventory) {
         <li>Color: ${cars.color}</li>
         <li>Purchased: ${cars.purchased}</li>
       </ul>
-      <p id="carDescription--${i}" class="Description">${cars.description}</p>
+      <p id="Description--${i}" class="Description">${cars.description}</p>
     </div>`;
   }
   output.innerHTML = inventoryString;
