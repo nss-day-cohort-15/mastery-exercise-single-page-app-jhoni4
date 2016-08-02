@@ -11,35 +11,45 @@ var CarLot = (function (newC) {
     for (var j = 0; j < selectdCard.length; j++){
       selectdCard[j].addEventListener("click", function(element) {
         CardClickedNow = document.getElementById(element.currentTarget.id);
-        var paragraph = element.currentTarget.getElementsByClassName("carDescription")[j];
 
+        var paragraph = element.currentTarget.getElementsByClassName("Description")[j];
+// this will focus the cursor at input field when card clicked
          newC.textFocus = function () {
           inputText.focus();
         }
         CarLot.textFocus();
 
-
+//   call to remove style fun
+        newC.removeStyleOnCards(selectdCard);
+//   cal set the text editable fun
         CarLot.getCarDescription(CardClickedNow);
+ //  call to change style fun
         CarLot.themeChanger(CardClickedNow);
       });
     }
 
-
+// i couldn't make the description edited separately
     newC.getCarDescription = function (CardClickedNow) {
           var input = "";
           inputText.value = "";
       inputText.addEventListener("keyup", function() {
-        var inputText = document.getElementById("inputText").innerHTML;
-        // var editableText = document.getElementById("Description--").innerHTML;
-        var val = val.replace("editableText", "inputText");
-        document.getElementById("Description--").innerHTML = val;
-        // input = inputText.value;
-;
-        // editableText.innerHTML = input;
+        input = inputText.value;
+       for (var j = 0; j < selectdCard.length; j++) {
+        var editableText = document.getElementById("Description--"+ CardClickedNow.id.split("--")[1]);
+           editableText.innerHTML = input;
+        }
+
       });
     }
 
+  }
+      //this will release the last card when new one clicked
+      newC.removeStyleOnCards = function (selectdCard) {
+      for (var i = 0; i < selectdCard.length; i++) {
+        selectdCard[i].classList.remove("convertTheme");
       }
+     }
+  //style will toggle when clicked
        newC.themeChanger = function (CardClickedNow) {
         event.currentTarget.classList.toggle("convertTheme");
        }
