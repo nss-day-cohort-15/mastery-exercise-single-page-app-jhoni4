@@ -1,58 +1,50 @@
 var CarLot = (function (newC) {
   var CardClickedNow = [];
-  var selectdCard = document.getElementsByClassName("card");
   var inputText = document.getElementById("inputText");
+  var selectdCard = document.getElementsByClassName("card");
 
 
 
   newC.activateEvents = function() {
-
 //..trying to put all the events listened in one function..if possible
     for (var j = 0; j < selectdCard.length; j++){
       selectdCard[j].addEventListener("click", function(element) {
         CardClickedNow = document.getElementById(element.currentTarget.id);
-
-        var paragraph = element.currentTarget.getElementsByClassName("Description")[j];
+        // console.log(element.currentTarget);
+        newC.removeStyleOnCards(selectdCard);//removes new theme when jumped to the other card//
 // this will focus the cursor at input field when card clicked
-         newC.textFocus = function () {
-          inputText.focus();
+        newC.textFocus = function () {
+        inputText.focus();
         }
         CarLot.textFocus();
 
-//   call to remove style fun
-        newC.removeStyleOnCards(selectdCard);
-//   cal set the text editable fun
+      newC.getCarDescription = function (CardClickedNow) {
+        var input = "";
+        inputText.value = "";
+      }//these functions need to be called before the click event ends
         CarLot.getCarDescription(CardClickedNow);
- //  call to change style fun
         CarLot.themeChanger(CardClickedNow);
-      });
-    }
+       });
+    } //click event function ends here
 
-// i couldn't make the description edited separately
-    newC.getCarDescription = function (CardClickedNow) {
-          var input = "";
-          inputText.value = "";
       inputText.addEventListener("keyup", function() {
         input = inputText.value;
-       for (var j = 0; j < selectdCard.length; j++) {
+        //i found no other option other than spiting the id since i can't include index
         var editableText = document.getElementById("Description--"+ CardClickedNow.id.split("--")[1]);
-           editableText.innerHTML = input;
-        }
-
+        editableText.innerHTML = input;
       });
-    }
 
-  }
+    }//activate event  ends here//
       //this will release the last card when new one clicked
       newC.removeStyleOnCards = function (selectdCard) {
-      for (var i = 0; i < selectdCard.length; i++) {
-        selectdCard[i].classList.remove("convertTheme");
+        for (var i = 0; i < selectdCard.length; i++) {
+          selectdCard[i].classList.remove("convertTheme");
+        }
       }
-     }
   //style will toggle when clicked
-       newC.themeChanger = function (CardClickedNow) {
+      newC.themeChanger = function (CardClickedNow) {
         event.currentTarget.classList.toggle("convertTheme");
-       }
+      }
 
   return newC;
-})(CarLot);
+})(CarLot || {});

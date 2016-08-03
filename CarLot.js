@@ -15,14 +15,14 @@ var CarLot = (function () {
   };
 
 })();
+//jason is loaded and ready so lets populate the DOM
+var CarLot = (function () {
 function populatePage (inventory) {
-
   var output = document.getElementById("finalOut");
   var inventoryString = "";
 // Looping though all array of cars
   for (var i = 0; i < inventory.cars.length; i++) {
     cars = inventory.cars[i];
-
     inventoryString +=
     `<div id="card--${i}" class="col-md-4 card" style="border: 1px solid ${cars.color}">
       <h2>${cars.year} ${cars.make}</h2>
@@ -32,7 +32,7 @@ function populatePage (inventory) {
         <li>Color: ${cars.color}</li>
         <li>Purchased: ${cars.purchased}</li>
       </ul>
-      <p id="Description--${i}" class="Description">${cars.description}</p>
+      <p id="Description--${i}" class="Description">Description:${cars.description}</p>
     </div>`;
   }
   output.innerHTML = inventoryString;
@@ -42,3 +42,5 @@ function populatePage (inventory) {
 }
 
 CarLot.loadInventory(populatePage);
+
+})(CarLot || {});
