@@ -1,50 +1,75 @@
 var CarLot = (function (newC) {
   var CardClickedNow = [];
   var inputText = document.getElementById("inputText");
-  var selectdCard = document.getElementsByClassName("card");
+  var selectCard = document.getElementsByClassName("card");
 
 
 
   newC.activateEvents = function() {
 //..trying to put all the events listened in one function..if possible
-    for (var j = 0; j < selectdCard.length; j++){
-      selectdCard[j].addEventListener("click", function(element) {
+    for (var j = 0; j < selectCard.length; j++){
+      selectCard[j].addEventListener("click", function(element) {
         CardClickedNow = document.getElementById(element.currentTarget.id);
         // console.log(element.currentTarget);
-        newC.removeStyleOnCards(selectdCard);//removes new theme when jumped to the other card//
+        newC.removeStyleOnCards(selectCard);//removes new theme when jumped to the other card//
 // this will focus the cursor at input field when card clicked
         newC.textFocus = function () {
         inputText.focus();
         }
-        CarLot.textFocus();
+        CarLot.textFocus();//order to apply focus
 
       newC.getCarDescription = function (CardClickedNow) {
         var input = "";
         inputText.value = "";
       }//these functions need to be called before the click event ends
         CarLot.getCarDescription(CardClickedNow);
-        CarLot.themeChanger(CardClickedNow);
+        CarLot.themeChanger(CardClickedNow, "red");
        });
     } //click event function ends here
 
       inputText.addEventListener("keyup", function() {
         input = inputText.value;
-        //i found no other option other than spiting the id since i can't include index
-        var editableText = document.getElementById("Description--"+ CardClickedNow.id.split("--")[1]);
+        carCardIndex = CardClickedNow.id.split("--")[1];
+        //i found no other option than splitting the id since i can't include index
+        var editableText = document.getElementById("Description--"+ carCardIndex);
         editableText.innerHTML = input;
       });
 
     }//activate event  ends here//
-      //this will release the last card when new one clicked
-      newC.removeStyleOnCards = function (selectdCard) {
-        for (var i = 0; i < selectdCard.length; i++) {
-          selectdCard[i].classList.remove("convertTheme");
-        }
-      }
-  //style will toggle when clicked
-      newC.themeChanger = function (CardClickedNow) {
-        event.currentTarget.classList.toggle("convertTheme");
-      }
+
 
   return newC;
 })(CarLot || {});
+
+
+//jason is loaded and ready so lets populate the DOM
+var CarLot = (function (finalCar) {
+function populatePage (inventory) {
+  var output = document.getElementById("finalOut");
+  var inventoryString = "";
+// Looping though all array of cars
+  for (var i = 0; i < inventory.cars.length; i++) {
+    cars = inventory.cars[i];
+    inventoryString +=
+    `<div id="card--${i}" class="col-md-4 card" style="border: 1px solid ${cars.color}">
+      <h2>${cars.year} ${cars.make}</h2>
+      <h3>${cars.model}</h3>
+      <ul>
+        <li>Price: $${cars.price}</li>
+        <li>Color: ${cars.color}</li>
+        <li>Purchased: ${cars.purchased}</li>
+      </ul>
+      <p id="Description--${i}" class="Description">Description:${cars.description}</p>
+    </div>`;
+  }
+  output.innerHTML = inventoryString;
+
+  CarLot.activateEvents();
+
+}
+
+CarLot.loadInventory(populatePage);
+
+  return finalCar;
+})(CarLot || {});
+
